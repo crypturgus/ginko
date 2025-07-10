@@ -1,0 +1,30 @@
+# Pliki systemowe
+.DS_Store
+.Rhistory
+.RData
+.Rproj.user/
+
+# Biblioteka pakietów renv (jak node_modules)
+app/renv/library/
+
+# Pliki cache i staging z renv (niepotrzebne w repo)
+app/renv/staging/
+app/renv/python/
+app/renv/settings.json
+
+# Lokalne pliki tymczasowe
+*.tar.gz
+*.Rcheck/
+
+# Pliki IDE (np. RStudio)
+*.Rproj
+
+# Dockerowe build cache
+*.log
+__pycache__/
+*.pid
+*.sock
+
+
+# Optional: ignore external scripts if they're dynamically fetched
+#app/external/

@@ -1,0 +1,24 @@
+.
+├── Dockerfile
+├── Makefile
+├── app
+│   ├── app
+│   │   └── external
+│   ├── app.R
+│   ├── external
+│   │   └── get_indicator1_data.R
+│   ├── scripts
+│   │   ├── fetch_config.json
+│   │   ├── fetch_external.R
+│   │   └── prepare_env.R
+│   └── utils.R
+├── docker-compose.yml
+├── project.txt
+└── renv
+    ├── activate.R
+    ├── library
+    │   └── R-4.3
+    ├── settings.json
+    └── staging
+
+10 directories, 12 files

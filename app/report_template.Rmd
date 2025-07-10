@@ -1,0 +1,17 @@
+---
+title: "Raport Indicator 1"
+output: html_document
+params:
+data: NA
+---
+
+```{r, echo=FALSE, message=FALSE}
+library(dplyr)
+library(knitr)
+
+# Dane przekazane z Shiny
+dane <- params$data
+
+# Podsumowanie
+cat("Liczba rekordów:", nrow(dane), "\n\n")
+cat("Liczba unikalnych taksonów:", length(unique(dane$taxon)), "\n\n")

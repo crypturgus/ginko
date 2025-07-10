@@ -1,0 +1,12 @@
+services:
+  appbuilder:
+    build:
+      context: .
+      dockerfile: Dockerfile.builder
+    image: appbuilder
+    container_name: appbuilder
+    platform: linux/amd64
+    working_dir: /app
+    tty: true
+    volumes:
+      - ./app:/app
