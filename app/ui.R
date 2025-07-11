@@ -21,7 +21,7 @@ ui <- fluidPage(
       .control-label {font-weight: bold;}
     "))
   ),
-  titlePanel("Script Selector"),
+  titlePanel("GINKO APP"),
   br(),
   wellPanel(
     class = "well-custom",
