@@ -1,0 +1,34 @@
+FROM rocker/r-ver:4.3.1
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    libcurl4-openssl-dev \
+    libssl-dev \
+    libxml2-dev \
+    libfontconfig1-dev \
+    libharfbuzz-dev \
+    libfribidi-dev \
+    libfreetype6-dev \
+    libpng-dev \
+    libtiff5-dev \
+    libjpeg-dev \
+    libx11-dev \
+    pandoc \
+    wget \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Copy app (with renv.lock and renv folder, if exists)
+WORKDIR /app
+COPY app/ /app/
+
+# Install packages globally using renv::restore(library=..., ...)
+RUN Rscript -e "renv::consent(TRUE); renv::restore(project = '/app', library = '/usr/local/lib/R/site-library', prompt = FALSE)"
+
+# Set permissions for global library (for good measure)
+RUN chown -R root:staff /usr/local/lib/R/site-library && chmod -R 755 /usr/local/lib/R/site-library
+
+# Expose port for Shiny
+EXPOSE 3838
+
+# Start Shiny app
+CMD ["R", "-e", "shiny::runApp('/app', host='0.0.0.0', port=3838)"]
