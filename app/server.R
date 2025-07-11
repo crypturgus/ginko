@@ -1,13 +1,31 @@
+# server.R
 library(shiny)
 library(readr)
 library(dplyr)
 library(tidyr)
 library(stringr)
 library(DT)
+library(shinyjs)
 
 server <- function(input, output, session) {
   # Reaktywny obiekt na wynik funkcji
   result_data <- reactiveVal(NULL)
+
+  # Walidacja transformToNeRatio - aktywacja/dezaktywacja przycisku
+  observe({
+    if (!is.null(input$script) && input$script == "transform_to_Ne.R") {
+      # Gdy input nie istnieje (bo conditionalPanel), nie rób nic
+      ratio <- input$transformToNeRatio
+      # Disable jeśli ratio poza zakresem lub NA
+      if (is.null(ratio) || is.na(ratio) || ratio < 0 || ratio > 1) {
+        shinyjs::disable("process")
+      } else {
+        shinyjs::enable("process")
+      }
+    } else {
+      shinyjs::enable("process")
+    }
+  })
 
   observeEvent(input$process, {
     req(input$kobo_file)
@@ -16,7 +34,7 @@ server <- function(input, output, session) {
     # Wczytaj plik i przygotuj dane
     data <- read_csv(input$kobo_file$datapath, show_col_types = FALSE)
     data$end <- as.character(data$end)   # Konwersja end na character
-    
+
     # Debug: Print column names and first few rows of data
     print("Columns in the data:")
     print(names(data))
