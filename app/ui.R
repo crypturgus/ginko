@@ -1,5 +1,7 @@
+# ui.R
 library(shiny)
 library(DT)
+library(shinyjs)  # Dodaj shinyjs
 
 script_choices <- list(
   "Download Kobo Attachment" = "download_kobo_attachment.R",
@@ -13,6 +15,7 @@ script_choices <- list(
 )
 
 ui <- fluidPage(
+  useShinyjs(),  # Aktywuj shinyjs
   tags$head(
     tags$style(HTML("
       .btn-green {background-color: #4CAF50; color: white;}
