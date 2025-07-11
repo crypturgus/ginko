@@ -32,7 +32,7 @@ ui <- fluidPage(
       column(3,
              selectInput(
                inputId = "script",
-               label = "Choose a script:",
+               label = "Choose a flow:",
                choices = script_choices,
                selected = names(script_choices)[1]
              ),
