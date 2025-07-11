@@ -48,7 +48,7 @@ ui <- fluidPage(
       column(3,
              fileInput(
                inputId = "kobo_file",
-               label = "Upload Kobo output CSV file",
+               label = "Upload Kobo CSV file",
                accept = c(".csv")
              )
       ),
