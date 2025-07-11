@@ -59,7 +59,7 @@ ui <- fluidPage(
       ),
       column(2,
              br(),
-             downloadButton("download_csv", "Download as CSV",
+             downloadButton("download_csv", "Download CSV",
                             class = "btn-blue", style = "width:100%; font-weight:bold;")
       )
     )
