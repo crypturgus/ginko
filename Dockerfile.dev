@@ -1,6 +1,6 @@
 FROM rocker/r-ver:4.3.1
 
-# Instalacja zależności systemowych (dodaj tutaj wszystkie wymagane, np. libx11-dev)
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     libcurl4-openssl-dev \
     libssl-dev \
@@ -17,20 +17,18 @@ RUN apt-get update && apt-get install -y \
     wget \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Instalacja renv
-RUN Rscript -e "install.packages('renv', repos='https://cloud.r-project.org')"
-
-# Ustaw katalog roboczy
+# Copy app (with renv.lock and renv folder, if exists)
 WORKDIR /app
-
-# Skopiuj cały kod aplikacji (razem z renv.lock)
 COPY app/ /app/
 
-# Przywróć środowisko renv — tu instalują się wszystkie pakiety z lockfile!
-RUN Rscript -e "renv::consent(TRUE); renv::restore(project = '/app', prompt = FALSE)"
+# Install packages globally using renv::restore(library=..., ...)
+RUN Rscript -e "renv::consent(TRUE); renv::restore(project = '/app', library = '/usr/local/lib/R/site-library', prompt = FALSE)"
 
-# Wystaw port na świat
+# Set permissions for global library (for good measure)
+RUN chown -R root:staff /usr/local/lib/R/site-library && chmod -R 755 /usr/local/lib/R/site-library
+
+# Expose port for Shiny
 EXPOSE 3838
 
-# Domyślne polecenie - uruchom Shiny
+# Start Shiny app
 CMD ["R", "-e", "shiny::runApp('/app', host='0.0.0.0', port=3838)"]
