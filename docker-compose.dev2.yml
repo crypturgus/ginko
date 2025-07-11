@@ -1,0 +1,14 @@
+services:
+  ginko-dev2:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev2
+    image: ginko-ginko2
+    ports:
+      - "3831:3838"
+    volumes:
+      - ./app:/app
+    environment:
+          - SHINY_LOG_LEVEL=TRACE  # For debugging
+    stdin_open: true
+    tty: true
